@@ -1,17 +1,27 @@
-package ddGUI;
+package Reply::Plugin::ddGUI;
 
 use 5.010001;
 use strict;
 use warnings;
 
 BEGIN {
-	$ddGUI::Window::AUTHORITY = 'cpan:TOBYINK';
-	$ddGUI::Window::VERSION   = '0.002';
+	$Reply::Plugin::ddGUI::AUTHORITY = 'cpan:TOBYINK';
+	$Reply::Plugin::ddGUI::VERSION   = '0.002';
 }
 
-use parent qw( Data::Dumper::GUI );
-*EXPORT = *Data::Dumper::GUI::EXPORT;
-*Dumper = *Data::Dumper::GUI::Dumper;
+use parent qw( Reply::Plugin );
+use ddGUI qw( Dumper );
+
+sub execute {
+	my $self = shift;
+	my ($next, @args) = @_;
+	@{ $self->{results} = [$next->(@args)] };
+}
+
+sub command_gui {
+	Dumper @{$_[0]{results}};
+	return 1;
+}
 
 1;
 
@@ -25,17 +35,18 @@ __END__
 
 =head1 NAME
 
-ddGUI - a shorter name for Data::Dumper::GUI
+Reply::Plugin::ddGUI - use Data::Dumper::GUI with Reply
 
 =head1 SYNOPSIS
 
-   use ddGUI;
-   
-   print Dumper(@variables);
+   ; .replyrc
+   [ddGUI]
 
 =head1 DESCRIPTION
 
-This is just an empty subclass of L<Data::Dumper::GUI>.
+This is a plugin for L<Reply> allowing you to inspect the last result
+using L<Data::Dumper::GUI>. After an interesting result, just type
+C<< #gui >> to open it up in a window.
 
 =head1 BUGS
 
@@ -44,7 +55,7 @@ L<http://rt.cpan.org/Dist/Display.html?Queue=Data-Dumper-GUI>.
 
 =head1 SEE ALSO
 
-L<Data::Dumper::GUI>.
+L<Data::Dumper::GUI>, L<Reply>.
 
 =head1 AUTHOR
 
