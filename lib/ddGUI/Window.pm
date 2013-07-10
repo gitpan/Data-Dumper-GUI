@@ -6,12 +6,13 @@ use warnings;
 
 BEGIN {
 	$ddGUI::Window::AUTHORITY = 'cpan:TOBYINK';
-	$ddGUI::Window::VERSION   = '0.002';
+	$ddGUI::Window::VERSION   = '0.003';
 }
 
 use Moo;
 
 use B 'perlstring';
+use Devel::Size qw( );
 use Prima qw( Application DetailedOutline PodView );
 use Scalar::Util qw( blessed reftype refaddr );
 use Types::Standard -types;
@@ -90,16 +91,28 @@ sub _display_node {
 	}
 	else {
 		$tv->read("=head1 TYPE\n\n");
-		$tv->read("Blessed: ${\ ref($item)}.\n\n") if blessed($item);
-		$tv->read("Reference type: ${\ reftype($item)}.\n\n");
-		$tv->read("Reference address: ${\ sprintf '0x%08X', refaddr($item)}.\n\n");
+		$tv->read("Reference address: ${\ sprintf '0x%08X', refaddr($item) }.\n\n");
+		$tv->read("Reference type: ${\ reftype($item) }.\n\n");
+		
+		if (reftype($item) eq 'ARRAY') {
+			$tv->read("Array length: ${\ scalar(@$item) }.\n\n");
+		}
+		
+		if (reftype($item) eq 'HASH') {
+			$tv->read("Hash key count: ${\ scalar(keys %$item) }.\n\n");
+			$tv->read("Hash buckets: ${\ scalar(%$item) } (used/total).\n\n");
+		}
 		
 		if (blessed($item)) {
+			$tv->read("Blessed: ${\ ref($item)}.\n\n");
 			if ('Class::MOP'->can('class_of') and my $meta = Class::MOP::class_of($item)) {
 				$self->_display_moose($path, $item, $meta);
 			}
 		}
 	}
+	$tv->read("=head1 MEMORY USAGE\n\n");
+	$tv->read("Size: ${\ Devel::Size::size($item)} bytes.\n\n");
+	$tv->read("Total size: ${\ Devel::Size::total_size($item)} bytes.\n\n");
 	$tv->close_read;
 }
 
@@ -159,10 +172,18 @@ sub _build_vars {
 sub _prepared_items {
 	my $self = shift;
 	$self->_seen({});
-	my $i;
+	my $i = -1;
 	return [
-		map { ++$i; $self->_item_to_arrayref($self->vars->[$i-1], $_, $self->vars->[$i-1]) } @{ $self->items }
+		map { ++$i; $self->_item_to_arrayref($self->vars->[$i], $_, $self->vars->[$i]) } @{ $self->items }
 	];
+}
+
+sub __maybequote {
+	map {
+		(/^_*[A-Z][A-Z0-9_]*$/i || /^-_*[A-Z][A-Z0-9_]+$/i)
+			? $_
+			: perlstring($_)
+	} @_
 }
 
 sub _item_to_arrayref {
@@ -187,12 +208,14 @@ sub _item_to_arrayref {
 	my @internals;
 	
 	if (reftype($item) eq 'ARRAY') {
-		my $i;
+		my $i = $[-1;
 		@internals = map { ++$i; $self->_item_to_arrayref("[$i]", $_, "$path\->[$i]") } @$item;
 	}
 	if (reftype($item) eq 'HASH') {
-		my $i;
-		@internals = map { $self->_item_to_arrayref("{$_}", $item->{$_}, "$path\->{$_}") } sort keys %$item;
+		@internals = map { $self->_item_to_arrayref("{${\__maybequote($_)}}", $item->{$_}, "$path\->{${\__maybequote($_)}}") } sort keys %$item;
+	}
+	if (reftype($item) eq 'SCALAR') {
+		@internals = $self->_item_to_arrayref("\${...}", $$item, "\${$path}");
 	}
 	
 	return [[ $label, '['.ref($item).']', $item, $path ], \@internals, !blessed($item), undef ];

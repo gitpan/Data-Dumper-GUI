@@ -22,6 +22,7 @@ no_index:
     - t
     - xt
 requires:
+  Devel::Size: 0.79
   Exporter::TypeTiny: 0.012
   Moo: 1.002000
   Prima: 1.36
@@ -32,4 +33,4 @@ resources:
   homepage: https://metacpan.org/release/Data-Dumper-GUI
   license: http://dev.perl.org/licenses/
   repository: https://github.com/tobyink/p5-data-dumper-gui
-version: 0.002
+version: 0.003

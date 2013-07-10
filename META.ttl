@@ -26,6 +26,7 @@ dist:project
 		nfo:fileName "lib/Data/Dumper/GUI.pm";
 		nfo:programmingLanguage "Perl";
 	];
+	cpant:requires    "Devel::Size 0.79"^^cpant:dsWithVersion;
 	cpant:requires    "Exporter::TypeTiny 0.012"^^cpant:dsWithVersion;
 	cpant:requires    "Moo 1.002000"^^cpant:dsWithVersion;
 	cpant:requires    "Prima 1.36"^^cpant:dsWithVersion;
@@ -48,6 +49,7 @@ dist:project
 	doap:programming-language "Perl";
 	doap:release      dist:v_0-001;
 	doap:release      dist:v_0-002;
+	doap:release      dist:v_0-003;
 	doap:repository   [
 		a doap:GitRepository;
 		doap:browse <https://github.com/tobyink/p5-data-dumper-gui>;
@@ -76,6 +78,40 @@ dist:v_0-002
 	dcs:released-by   cpan:tobyink;
 	doap:file-release <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Data-Dumper-GUI-0.002.tar.gz>;
 	doap:revision     "0.002"^^xsd:string.
+
+dist:v_0-003
+	a                 doap:Version;
+	dc:identifier     "Data-Dumper-GUI-0.003"^^xsd:string;
+	dc:issued         "2013-07-10"^^xsd:date;
+	dcs:changeset     [
+		dcs:item [
+			a dcs:Change;
+			rdfs:label "Dereference SCALAR refs in outline.";
+		];
+		dcs:item [
+			a dcs:Bugfix;
+			rdfs:label "Array indices count from $[, not 1.";
+		];
+		dcs:item [
+			a dcs:Addition;
+			rdfs:label "Include size of references using Devel::Size.";
+		];
+		dcs:item [
+			a dcs:Addition;
+			rdfs:label "Show length of arrays.";
+		];
+		dcs:item [
+			a dcs:Addition;
+			rdfs:label "Show key count for hashes, and bucket count.";
+		];
+		dcs:item [
+			a dcs:Bugfix;
+			rdfs:label "Quote hash keys when necessary.";
+		];
+	];
+	dcs:released-by   cpan:tobyink;
+	doap:file-release <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Data-Dumper-GUI-0.003.tar.gz>;
+	doap:revision     "0.003"^^xsd:string.
 
 cpan:tobyink
 	a                 foaf:Person;

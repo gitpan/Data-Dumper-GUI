@@ -34,4 +34,5 @@ meta/makefile.pret
 meta/people.pret
 README
 t/01basic.t
+TODO
 SIGNATURE                                Public-key signature (added by MakeMaker)
