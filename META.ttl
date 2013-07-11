@@ -50,6 +50,7 @@ dist:project
 	doap:release      dist:v_0-001;
 	doap:release      dist:v_0-002;
 	doap:release      dist:v_0-003;
+	doap:release      dist:v_0-004;
 	doap:repository   [
 		a doap:GitRepository;
 		doap:browse <https://github.com/tobyink/p5-data-dumper-gui>;
@@ -112,6 +113,37 @@ dist:v_0-003
 	dcs:released-by   cpan:tobyink;
 	doap:file-release <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Data-Dumper-GUI-0.003.tar.gz>;
 	doap:revision     "0.003"^^xsd:string.
+
+dist:v_0-004
+	a                 doap:Version;
+	dc:identifier     "Data-Dumper-GUI-0.004"^^xsd:string;
+	dc:issued         "2013-07-11"^^xsd:date;
+	dcs:changeset     [
+		dcs:item [
+			a dcs:Change;
+			rdfs:label "Make window resizable, and allow the split between the two panels to be dragged across.";
+			dcs:blame cpan:karasik;
+			rdfs:seeAlso <https://github.com/tobyink/p5-data-dumper-gui/pull/1>;
+		];
+		dcs:item [
+			a dcs:Change;
+			rdfs:label "Remove useless [-] icons from leaf nodes in outline.";
+			dcs:blame cpan:karasik;
+			rdfs:comment "I dunno; I don't get any icons anyway.";
+			rdfs:seeAlso <https://github.com/tobyink/p5-data-dumper-gui/pull/1>;
+		];
+	];
+	dcs:released-by   cpan:tobyink;
+	doap:file-release <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Data-Dumper-GUI-0.004.tar.gz>;
+	doap:revision     "0.004"^^xsd:string.
+
+cpan:karasik
+	a                 foaf:Person;
+	foaf:name         "Dmitry Karasik";
+	foaf:homepage     <http://www.karasik.eu.org/>;
+	foaf:nick         "KARASIK";
+	foaf:page         <https://github.com/dk>;
+	foaf:page         <https://metacpan.org/author/KARASIK>.
 
 cpan:tobyink
 	a                 foaf:Person;

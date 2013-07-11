@@ -6,6 +6,14 @@ Home page:    <https://metacpan.org/release/Data-Dumper-GUI>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=Data-Dumper-GUI>
 Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
 
+0.004  2013-07-11
+
+ - Make window resizable, and allow the split between the two panels to be
+   dragged across.
+   ++$KARASIK
+ - Remove useless [-] icons from leaf nodes in outline.
+   ++$KARASIK
+
 0.003  2013-07-10
 
  - (Addition) Include size of references using Devel::Size.
