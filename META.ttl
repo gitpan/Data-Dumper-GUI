@@ -51,6 +51,7 @@ dist:project
 	doap:release      dist:v_0-002;
 	doap:release      dist:v_0-003;
 	doap:release      dist:v_0-004;
+	doap:release      dist:v_0-005;
 	doap:repository   [
 		a doap:GitRepository;
 		doap:browse <https://github.com/tobyink/p5-data-dumper-gui>;
@@ -136,6 +137,22 @@ dist:v_0-004
 	dcs:released-by   cpan:tobyink;
 	doap:file-release <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Data-Dumper-GUI-0.004.tar.gz>;
 	doap:revision     "0.004"^^xsd:string.
+
+dist:v_0-005
+	a                 doap:Version;
+	dc:identifier     "Data-Dumper-GUI-0.005"^^xsd:string;
+	dc:issued         "2013-07-12"^^xsd:date;
+	dcs:changeset     [
+		dcs:item [
+			a dcs:Change;
+			rdfs:label "Switch off index section in PodView.";
+			dcs:blame cpan:karasik;
+			rdfs:seeAlso <https://github.com/dk/Prima/commit/ba12aa0ba61d8f8b11f2c0834447cfed52889309>;
+		];
+	];
+	dcs:released-by   cpan:tobyink;
+	doap:file-release <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Data-Dumper-GUI-0.005.tar.gz>;
+	doap:revision     "0.005"^^xsd:string.
 
 cpan:karasik
 	a                 foaf:Person;
