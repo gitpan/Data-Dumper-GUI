@@ -6,10 +6,10 @@ use warnings;
 
 BEGIN {
 	$Data::Dumper::GUI::AUTHORITY = 'cpan:TOBYINK';
-	$Data::Dumper::GUI::VERSION   = '0.005';
+	$Data::Dumper::GUI::VERSION   = '0.006';
 }
 
-use parent qw( Exporter::TypeTiny Data::Dumper );
+use parent qw( Exporter::Tiny Data::Dumper );
 our @EXPORT = qw(Dumper);
 
 sub Dump {
@@ -62,10 +62,19 @@ Data::Dumper::GUI - just what Data::Dumper needed... a GUI
 
 Data::Dumper::GUI is a little like L<Data::Dumper>, but as well as printing
 out a dump of the variables it is passed, it also shows them in a pretty
-GUI with a tree view, allowing you to expand and collapse nodes, etc.
+GUI (graphical user interface) with a tree view, allowing you to expand and
+collapse nodes, etc.
 
 It has special secret sauce support for L<Moose> objects. (And for L<Moo>
 objects too, if you make sure Moose is loaded before dumping them.)
+
+=begin HTML
+
+<p><img src="http://buzzword.org.uk/2013/ddGUI-eg1.png"
+title="Dumper({ name => 'Foo Bar', list => [1..5] })"
+width="644" height="417" alt="" /></p>
+
+=end HTML
 
 =head1 BUGS
 
